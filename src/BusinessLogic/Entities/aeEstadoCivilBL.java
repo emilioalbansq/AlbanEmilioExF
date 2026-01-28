@@ -2,14 +2,14 @@ package BusinessLogic.Entities;
 
 import java.util.List;
 
-import DataAccess.aeEstadoCivilDAO;
-import DataAccess.DTO.aeEstadoCivilDTO;
+import DataAccess.DAOs.aeEstadoCivilDAO;
+import DataAccess.DTOs.aeEstadoCivilDTO;
 
 
 public class aeEstadoCivilBL {
 
     private aeEstadoCivilDTO aeEstadoCivil;
-    private aeEstadoCivilDAO aeEstadoCivilDAO = new aeEstadoCivilDAO();
+    private aeEstadoCivilDAO aeEstadoCivilDAO;
     
     public aeEstadoCivilBL() {}
 
@@ -22,7 +22,7 @@ public class aeEstadoCivilBL {
     }
 
     public aeEstadoCivilDTO getByIdEstadoCivil(int id) throws Exception {
-        aeEstadoCivil = aeEstadoCivilDAO.readById(id);
+        aeEstadoCivil = aeEstadoCivilDAO.readBy(id);
         return aeEstadoCivil;
     }
 
@@ -36,10 +36,6 @@ public class aeEstadoCivilBL {
 
     public boolean delete(int id)  throws Exception {
         return aeEstadoCivilDAO.delete(id);
-    }
-
-    public Integer getRowCount() throws Exception {
-        return aeEstadoCivilDAO.getRowCount();
     }
 
 }

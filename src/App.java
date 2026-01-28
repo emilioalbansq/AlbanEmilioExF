@@ -1,15 +1,20 @@
-import BusinessLogic.Entities.aeEstadoCivilBL;
-import BusinessLogic.Entities.aePersonaTipoBL;
-import BusinessLogic.Entities.aeSexoBL;
-import DataAccess.aeEstadoCivilDAO;
-import DataAccess.aePersonaTipoDAO;
-import DataAccess.aeSexoDAO;
-import DataAccess.DTO.aeEstadoCivilDTO;
-import DataAccess.DTO.aeSexoDTO;
+import App.DesktopApp.Forms.AppSplashScreen;
+import App.DesktopApp.Forms.AppStart;
+// import BusinessLogic.Entities.aeEstadoCivilBL;
+// import BusinessLogic.Entities.aePersonaTipoBL;
+// import BusinessLogic.Entities.aeSexoBL;
+// import DataAccess.DAOs.aeEstadoCivilDAO;
+// import DataAccess.DAOs.aePersonaTipoDAO;
+// import DataAccess.DAOs.aeSexoDAO;
+// import DataAccess.DTOs.aeEstadoCivilDTO;
+// import DataAccess.DTOs.aeSexoDTO;
 
 public class App {
     public static void main(String[] args) throws Exception {
         
+        new AppSplashScreen();
+        new AppStart("aeExoBot");
+
         //TESTING DAO:
         // try {
         //     SexoDAO sDAO = new SexoDAO();
@@ -35,26 +40,26 @@ public class App {
         // }
 
         //TESTING BL:
-        try {
-            aeSexoBL sBL = new aeSexoBL();
-            //sBL.create(new SexoDTO(0, 0, "Nuevo Sexo", "Prueba", null, null, null));
-            for (aeSexoDTO s : sBL.getAll())
-                System.out.println(s.toString());
+        // try {
+        //     aeSexoBL sBL = new aeSexoBL();
+        //     //sBL.create(new SexoDTO(0, 0, "Nuevo Sexo", "Prueba", null, null, null));
+        //     for (aeSexoDTO s : sBL.getAll())
+        //         System.out.println(s.toString());
 
-            System.out.println("------------------");
+        //     System.out.println("------------------");
 
-            aeEstadoCivilBL ecBL = new aeEstadoCivilBL();
-            for (aeEstadoCivilDTO ec : ecBL.getAll())
-                System.out.println(ec.toString());
+        //     aeEstadoCivilBL ecBL = new aeEstadoCivilBL();
+        //     for (aeEstadoCivilDTO ec : ecBL.getAll())
+        //         System.out.println(ec.toString());
 
-            System.out.println("------------------");
+        //     System.out.println("------------------");
 
-            aePersonaTipoBL ptBL = new aePersonaTipoBL();
-            for (var pt : ptBL.getAll())
-                System.out.println(pt.toString());
+        //     aePersonaTipoBL ptBL = new aePersonaTipoBL();
+        //     for (var pt : ptBL.getAll())
+        //         System.out.println(pt.toString());
             
-        } catch (Exception e) {
-            System.out.println(e.toString());
-        }
+        // } catch (Exception e) {
+        //     System.out.println(e.toString());
+        // }
     }
 }

@@ -2,12 +2,12 @@ package BusinessLogic.Entities;
 
 import java.util.List;
 
-import DataAccess.aeSexoDAO;
-import DataAccess.DTO.aeSexoDTO;
+import DataAccess.DAOs.aeSexoDAO;
+import DataAccess.DTOs.aeSexoDTO;
 
 public class aeSexoBL {
     private aeSexoDTO aeSexo;
-    private aeSexoDAO aeSexoDAO = new aeSexoDAO();
+    private aeSexoDAO aeSexoDAO;
     
     public aeSexoBL() {}
 
@@ -20,7 +20,7 @@ public class aeSexoBL {
     }
 
     public aeSexoDTO getByIdSexo(int id) throws Exception {
-        aeSexo = aeSexoDAO.readById(id);
+        aeSexo = aeSexoDAO.readBy(id);
         return aeSexo;
     }
 
@@ -36,7 +36,4 @@ public class aeSexoBL {
         return aeSexoDAO.delete(id);
     }
 
-    public Integer getRowCount() throws Exception {
-        return aeSexoDAO.getRowCount();
-    }
 }

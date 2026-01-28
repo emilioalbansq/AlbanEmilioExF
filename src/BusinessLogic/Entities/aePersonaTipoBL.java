@@ -2,15 +2,14 @@ package BusinessLogic.Entities;
 
 import java.util.List;
 
-
-import DataAccess.aePersonaTipoDAO;
-import DataAccess.DTO.aePersonaTipoDTO;
+import DataAccess.DAOs.aePersonaTipoDAO;
+import DataAccess.DTOs.aePersonaTipoDTO;
 
 
 public class aePersonaTipoBL {
 
     private aePersonaTipoDTO personaTipo;
-    private aePersonaTipoDAO personaTipoDAO = new aePersonaTipoDAO();
+    private aePersonaTipoDAO personaTipoDAO;
     
     public aePersonaTipoBL() {}
 
@@ -19,7 +18,7 @@ public class aePersonaTipoBL {
     }
 
     public aePersonaTipoDTO getByIdPersonaTipo(int id) throws Exception {
-        personaTipo = personaTipoDAO.readById(id);
+        personaTipo = personaTipoDAO.readBy(id);
         return personaTipo;
     }
 
@@ -33,10 +32,6 @@ public class aePersonaTipoBL {
 
     public boolean delete(int id)  throws Exception {
         return personaTipoDAO.delete(id);
-    }
-
-    public Integer getRowCount() throws Exception {
-        return personaTipoDAO.getRowCount();
     }
 
 }
