@@ -1,0 +1,88 @@
+-- database: ../DataBase/aeEXOBOT.sqlite
+/*
+Autor: emilioalbansq
+Fecha: 3.enero.2026
+Script: Creacion de la estructura de datos para Exabot
+*/
+
+DROP TABLE IF EXISTS ExaBot;
+DROP TABLE IF EXISTS Persona;
+-- DROP TABLE IF EXISTS PersonaTipo;
+DROP TABLE IF EXISTS Catalogo;
+DROP TABLE IF EXISTS CatalogoTipo;
+DROP TABLE IF EXISTS IABot;
+
+DROP TABLE IF EXISTS ExoBotArma;
+DROP TABLE IF EXISTS TipoArma;
+DROP TABLE IF EXISTS TipoEnergia;
+DROP TABLE IF EXISTS AccionArma;
+DROP TABLE IF EXISTS ExoBot;
+DROP TABLE IF EXISTS IABot;
+DROP TABLE IF EXISTS TipoExoBot;
+DROP TABLE IF EXISTS SoldadoExperto;
+
+
+
+CREATE TABLE CatalogoTipo (
+    IdCatalogoTipo INTEGER      NOT NULL PRIMARY KEY AUTOINCREMENT
+   ,Nombre         VARCHAR(10)  NOT NULL UNIQUE
+   ,Descripcion    VARCHAR(90)
+
+   ,Estado         VARCHAR(1)   NOT NULL DEFAULT('A')
+   ,FechaCreacion  DATETIME     DEFAULT(datetime('now','localtime'))
+   ,FechaModifica  DATETIME
+);
+
+CREATE TABLE Catalogo (
+    IdCatalogo INTEGER          NOT NULL PRIMARY KEY AUTOINCREMENT
+   ,IdCatalogoTipo INTEGER      NOT NULL REFERENCES CatalogoTipo (IdCatalogoTipo)
+   ,Nombre         VARCHAR(10)  NOT NULL UNIQUE
+   ,Descripcion    VARCHAR(90)
+
+   ,Estado         VARCHAR(1)   NOT NULL DEFAULT('A')
+   ,FechaCreacion  DATETIME     DEFAULT(datetime('now','localtime'))
+   ,FechaModifica  DATETIME
+);
+
+CREATE TABLE IABot (
+    IdIABot          integer primary key autoincrement,
+    Nombre           VARCHAR(50) NOT NULL,
+
+   ,Estado         VARCHAR(1)   NOT NULL DEFAULT('A')
+   ,FechaCreacion  DATETIME     DEFAULT(datetime('now','localtime'))
+   ,FechaModifica  DATETIME
+);
+
+CREATE TABLE ExaBot (
+    IdExaBot         integer primary key autoincrement,
+    IdIABot          integer NOT NULL,
+    Nombre           TEXT NOT NULL,
+    Serie            TEXT NOT NULL,
+    CONSTRAINT fk_IABot      FOREIGN KEY (IdIABot)     REFERENCES IABot(IdIABot)
+);
+
+/* CREATE TABLE PersonaTipo (
+    IdPersonaTipo    INTEGER primary key autoincrement,
+    Descripcion      TEXT NOT NULL UNIQUE,
+    FechaCrea        datetime default current_timestamp
+); */
+
+
+CREATE TABLE Persona (
+    IdPersona              INTEGER primary key autoincrement
+    ,IdCatalogoTipoPersona     INTEGER NOT NULL REFERENCES Catalogo(IdCatalogo)
+    ,IdCatalogoSexo        INTEGER NOT NULL REFERENCES Catalogo(IdCatalogo)
+    ,IdCatalogoEstadoCivil INTEGER NOT NULL REFERENCES Catalogo(IdCatalogo)
+    ,Cedula                VARCHAR(10) NOT NULL UNIQUE
+    ,Nombre                VARCHAR(50) NOT NULL
+    ,Apellido              VARCHAR(50) NOT NULL
+
+    ,Estado                VARCHAR(1)   NOT NULL DEFAULT('A')
+    ,FechaCrea             DATETIME DEFAULT(datetime('now','localtime'))
+    ,FechaModifica         DATETIME
+);
+
+
+
+
+SELECT * FROM PersonaTipo;
