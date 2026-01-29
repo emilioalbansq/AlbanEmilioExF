@@ -58,6 +58,15 @@ public class DataHelperSQLiteDAO <T> implements IDAO<T> {
         this.tablePK   = tablePK;
     }
 
+    private boolean isAuditOrDefaultField(String fieldName) {
+        return fieldName.equalsIgnoreCase("Estado")
+            || fieldName.equalsIgnoreCase("FechaCreacion")
+            || fieldName.equalsIgnoreCase("FechaCrea")
+            || fieldName.equalsIgnoreCase("fechaCrea")
+            || fieldName.equalsIgnoreCase("FechaModifica")
+            || fieldName.equalsIgnoreCase("fechaModifica");
+    }
+
     @Override
     public boolean create(T entity) throws AppException {
         Field[] fields = DTOClass.getDeclaredFields();
@@ -68,13 +77,14 @@ public class DataHelperSQLiteDAO <T> implements IDAO<T> {
             field.setAccessible(true);
             String name = field.getName();
             // Excluir PK y campos por defecto y auditoria
-            if (!name.equalsIgnoreCase(tablePK)
-                && !name.equalsIgnoreCase("Estado")
-                && !name.equalsIgnoreCase("FechaCreacion")
-                && !name.equalsIgnoreCase("FechaModifica")) {
+            if (!name.equalsIgnoreCase(tablePK) && !isAuditOrDefaultField(name)) {
                 columns.append(name).append(",");
                 placeholders.append("?,");
             }
+        }
+
+        if (columns.length() == 0) {
+            throw new AppException("No existen columnas para insertar en " + tableName, null, getClass(), "create");
         }
 
         // Eliminar la última coma
@@ -87,11 +97,9 @@ public class DataHelperSQLiteDAO <T> implements IDAO<T> {
             int index = 1;
             for (Field field : fields) {
                 String name = field.getName();
-                if (!name.equalsIgnoreCase(tablePK)
-                    && !name.equalsIgnoreCase("Estado")
-                    && !name.equalsIgnoreCase("FechaCreacion")
-                    && !name.equalsIgnoreCase("FechaModifica")) 
-                        stmt.setObject(index++, field.get(entity));
+                if (!name.equalsIgnoreCase(tablePK) && !isAuditOrDefaultField(name)) {
+                    stmt.setObject(index++, field.get(entity));
+                }
             }
             return (stmt.executeUpdate() > 0);
         } catch (SQLException | IllegalAccessException e) {
@@ -109,14 +117,23 @@ public class DataHelperSQLiteDAO <T> implements IDAO<T> {
             for (Field field : fields) {
                 String name = field.getName();
 
-                if (!name.equalsIgnoreCase(tablePK)) {
-                    updates.append(name).append(" = ?, ");
-                } else {
+                if (name.equalsIgnoreCase(tablePK)) {
                     if (!field.canAccess(entity)) {
                         field.setAccessible(true);
                     }
                     pkValue = field.get(entity);
+                    continue;
                 }
+
+                // No actualizar fecha de creación; fecha de modificación se setea al final
+                if (name.equalsIgnoreCase("FechaCreacion") || name.equalsIgnoreCase("FechaCrea") || name.equalsIgnoreCase("fechaCrea")) {
+                    continue;
+                }
+                if (name.equalsIgnoreCase("FechaModifica") || name.equalsIgnoreCase("fechaModifica")) {
+                    continue;
+                }
+
+                updates.append(name).append(" = ?, ");
             }
 
             updates.append("FechaModifica = ?"); // campo técnico de auditoría
@@ -127,12 +144,21 @@ public class DataHelperSQLiteDAO <T> implements IDAO<T> {
                 int index = 1;
                 for (Field field : fields) {
                     String name = field.getName();
-                    if (!name.equalsIgnoreCase(tablePK)) {
-                        if (!field.canAccess(entity)) {
-                            field.setAccessible(true);
-                        }
-                        stmt.setObject(index++, field.get(entity));
+                    if (name.equalsIgnoreCase(tablePK)) {
+                        continue;
                     }
+
+                    if (name.equalsIgnoreCase("FechaCreacion") || name.equalsIgnoreCase("FechaCrea") || name.equalsIgnoreCase("fechaCrea")) {
+                        continue;
+                    }
+                    if (name.equalsIgnoreCase("FechaModifica") || name.equalsIgnoreCase("fechaModifica")) {
+                        continue;
+                    }
+
+                    if (!field.canAccess(entity)) {
+                        field.setAccessible(true);
+                    }
+                    stmt.setObject(index++, field.get(entity));
                 }
 
                 stmt.setString(index++, getDataTimeNow()); // FechaModifica
@@ -227,14 +253,43 @@ public class DataHelperSQLiteDAO <T> implements IDAO<T> {
                 String col = meta.getColumnLabel(i); // usa alias si existen
                 Object val = rs.getObject(i);
 
-                Field field = DTOClass.getDeclaredField(col);
-                if (!field.canAccess(instance)) {
-                    field.setAccessible(true);
+                Field field = null;
+                for (Field f : DTOClass.getDeclaredFields()) {
+                    if (f.getName().equalsIgnoreCase(col)) {
+                        field = f;
+                        break;
+                    }
                 }
-                field.set(instance, val);
+
+                // Compatibilidad con DTOs existentes (fechaCrea vs FechaCreacion)
+                if (field == null && col != null) {
+                    if (col.equalsIgnoreCase("FechaCreacion")) {
+                        for (Field f : DTOClass.getDeclaredFields()) {
+                            if (f.getName().equalsIgnoreCase("fechaCrea") || f.getName().equalsIgnoreCase("fechaCreacion")) {
+                                field = f;
+                                break;
+                            }
+                        }
+                    } else if (col.equalsIgnoreCase("FechaModifica")) {
+                        for (Field f : DTOClass.getDeclaredFields()) {
+                            if (f.getName().equalsIgnoreCase("fechaModifica")) {
+                                field = f;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                // Si el DTO no tiene el campo, ignorar (útil para JOINs o columnas técnicas)
+                if (field != null) {
+                    if (!field.canAccess(instance)) {
+                        field.setAccessible(true);
+                    }
+                    field.set(instance, val);
+                }
             }
             return instance;
-        } catch (SQLException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException | NoSuchFieldException e) {
+        } catch (SQLException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
             throw new AppException(null, e, getClass(), "mapResultSetToEntity");
         }
     }

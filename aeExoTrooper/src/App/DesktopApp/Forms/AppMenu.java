@@ -44,7 +44,7 @@ public class AppMenu extends JPanel {
 
         // glue para empujar el copyright
         add(Box.createVerticalGlue());
-        add(new JLabel(" ──❰ 💀 ❱── © 2K26 PATMIC "));
+        add(new JLabel(" ──❰ sq🐱‍👤 ❱── Emilio Alban "));
     }
 
     public void addMenuItem(PatButton button) {

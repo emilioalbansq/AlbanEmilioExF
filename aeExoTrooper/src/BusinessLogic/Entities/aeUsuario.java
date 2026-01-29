@@ -15,7 +15,9 @@ public class aeUsuario {
     }
 
     public boolean aeCheckLogin(String usuario, String contrasena) {
-        return this.usuario.equals(usuario) && this.contrasena.equals(contrasena);
+        //Refactorización: el enunciado solicita "cédula y clave" pero también pide agregar acceso "patmic/123".
+        boolean byUser = this.usuario.equals(usuario) && this.contrasena.equals(contrasena);
+        return byUser;
     }
 
 

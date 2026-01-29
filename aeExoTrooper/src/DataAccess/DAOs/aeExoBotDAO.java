@@ -1,5 +1,11 @@
 package DataAccess.DAOs;
 
-public class aeExoBotDAO {
+import DataAccess.DTOs.aeExoBotDTO;
+import DataAccess.Helpers.DataHelperSQLiteDAO;
+import Infrastructure.AppException;
 
+public class aeExoBotDAO extends DataHelperSQLiteDAO<aeExoBotDTO> {
+    public aeExoBotDAO() throws AppException {
+        super(aeExoBotDTO.class, "ExoBot", "IdExoBot");
+    }
 }

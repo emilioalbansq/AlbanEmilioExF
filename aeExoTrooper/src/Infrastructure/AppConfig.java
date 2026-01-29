@@ -12,7 +12,16 @@ import Infrastructure.Tools.CMD;
 public abstract class AppConfig {
     private static final Properties props = new Properties();
    
+    // Ruta principal (cuando se ejecuta dentro de aeExoTrooper/)
     private static final String APP_PROPERTIES      = "src/app.properties";
+    // Rutas alternativas (cuando se ejecuta desde el directorio padre)
+    private static final String[] APP_PROPERTIES_PATHS = new String[] {
+        "src/app.properties",
+        "aeExoTrooper/src/app.properties",
+        "../aeExoTrooper/src/app.properties",
+        "../src/app.properties"
+    };
+    private static String appPropertiesPathUsed = APP_PROPERTIES;
     private static final String KEY_DB_NAME         = "db.File"     ;
     private static final String KEY_FILE_LOG        = "df.logFile"  ;
     private static final String KEY_FILE_EXOMUNISION= "df.ExoMunision"  ;
@@ -42,10 +51,20 @@ public abstract class AppConfig {
     public static final String MSG_DEFAULT_METHOD   = "undefined";
 
     static {
-        try (InputStream appProperties = new FileInputStream(APP_PROPERTIES)) {
-            props.load(appProperties);
-        } catch (IOException e) {
-            CMD.printlnError("ERROR al cargar ❱❱ " + e.getMessage());
+        boolean loaded = false;
+        for (String path : APP_PROPERTIES_PATHS) {
+            try (InputStream appProperties = new FileInputStream(path)) {
+                props.load(appProperties);
+                appPropertiesPathUsed = path;
+                CMD.println("AppConfig ❱❱ cargado: " + path);
+                loaded = true;
+                break;
+            } catch (IOException _) {
+                // Intentar siguiente ruta
+            }
+        }
+        if (!loaded) {
+            CMD.printlnError("ERROR al cargar ❱❱ app.properties (no se encontró en rutas conocidas)");
         }
     }
 
@@ -53,11 +72,11 @@ public abstract class AppConfig {
 
     static String getProperty(String key) {
         String path = props.getProperty(key);
-        CMD.println("AppConfig ❱❱ "+ APP_PROPERTIES +"." + key + " : "+ path);
+        CMD.println("AppConfig ❱❱ "+ appPropertiesPathUsed +"." + key + " : "+ path);
         if(path != null)
             return  path;
         else
-            CMD.printlnError("ERROR ❱❱ " + APP_PROPERTIES +"." + key + " : "+ path);
+            CMD.printlnError("ERROR ❱❱ " + appPropertiesPathUsed +"." + key + " : "+ path);
         return null;
     }
 
