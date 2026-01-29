@@ -1,0 +1,21 @@
+2026-01-28 23:54:46 | GOOD : Acceso concedido
+2026-01-28 23:57:41 | GOOD : Acceso concedido
+2026-01-28 23:57:58 | GOOD : Soldado Experto-1 Fusil asistir
+2026-01-28 23:57:58 | GOOD : Soldado Experto-2 Revolver asistir
+2026-01-28 23:58:02 | ERROR: Fusil asistir Munición_Fusil
+2026-01-28 23:58:04 | ERROR: Fusil asistir Munición_Fusil
+2026-01-28 23:58:30 | ERROR: Fusil asistir Munición_Fusil
+2026-01-28 23:58:31 | ERROR: Fusil asistir Munición_Fusil
+2026-01-28 23:58:42 | GOOD : Soldado Experto-3 Fusil asistir
+2026-01-28 23:58:42 | GOOD : Soldado Experto-4 Revolver asistir
+2026-01-28 23:58:44 | GOOD : Soldado Experto-5 Fusil asistir
+2026-01-28 23:58:44 | GOOD : Soldado Experto-1 Revolver asistir
+2026-01-28 23:58:46 | ERROR: Fusil asistir Munición_Fusil
+2026-01-28 23:58:48 | ERROR: Fusil asistir Munición_Fusil
+2026-01-28 23:58:50 | ERROR: Fusil asistir Munición_Fusil
+2026-01-28 23:58:51 | ERROR: Fusil asistir Munición_Fusil
+2026-01-28 23:58:51 | ERROR: Fusil asistir Munición_Fusil
+2026-01-28 23:58:52 | ERROR: Fusil asistir Munición_Fusil
+2026-01-28 23:58:54 | GOOD : Soldado Experto-2 Fusil asistir
+2026-01-28 23:58:54 | GOOD : Soldado Experto-3 Revolver asistir
+2026-01-28 23:58:58 | GOOD : Revolver asistir Munición_Revolver

@@ -1,5 +1,7 @@
 package BusinessLogic.Entities;
 
+import Infrastructure.Tools.CMD;
+
 public abstract class aeTipoArma {
 
 
@@ -11,9 +13,13 @@ public abstract class aeTipoArma {
     }
 
     public void accionArmar(aeTipoArma tipoArma, aeTipoMunicion tipoMunicion) {
-        // Implementación de la acción de armar con el tipo de arma específico
-    }
+        CMD.traceGood(
+        tipoArma.getTipo() + " " +
+        this.getClass().getSimpleName() + " " +
+        tipoMunicion.getTipo()
+    );}
 
+    
      public String getTipo() {
         return tipo;
     }

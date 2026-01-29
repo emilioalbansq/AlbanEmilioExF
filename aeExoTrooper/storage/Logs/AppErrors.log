@@ -44,3 +44,11 @@
 ╰──── LOG  ❱❱ 2026-01-28 23:16:28 | aeTipoExoBotDAO.DataHelperSQLiteDAO | No suitable driver found for jdbc:sqlite:storage/Databases/aeEXOBOT.sqlite
 ╭─💀─ SHOW ❱❱ Error al instanciar classDAO<T> 
 ╰──── LOG  ❱❱ 2026-01-28 23:16:28 | FactoryBL.FactoryBL(<T>) | Ups! Error inesperado. Por favor, contacte al administrador del sistema.
+╭─💀─ SHOW ❱❱ Ups! Error inesperado. Por favor, contacte al administrador del sistema. 
+╰──── LOG  ❱❱ 2026-01-28 23:28:52 | aeTipoExoBotDAO.DataHelperSQLiteDAO | No suitable driver found for jdbc:sqlite:storage/Databases/aeEXOBOT.sqlite
+╭─💀─ SHOW ❱❱ Error al instanciar classDAO<T> 
+╰──── LOG  ❱❱ 2026-01-28 23:28:52 | FactoryBL.FactoryBL(<T>) | Ups! Error inesperado. Por favor, contacte al administrador del sistema.
+╭─💀─ SHOW ❱❱ Ups! Error inesperado. Por favor, contacte al administrador del sistema. 
+╰──── LOG  ❱❱ 2026-01-28 23:54:53 | aeTipoExoBotDAO.DataHelperSQLiteDAO | No suitable driver found for jdbc:sqlite:aeExoTrooper/storage/Databases/aeEXOBOT.sqlite
+╭─💀─ SHOW ❱❱ Error al instanciar classDAO<T> 
+╰──── LOG  ❱❱ 2026-01-28 23:54:53 | FactoryBL.FactoryBL(<T>) | Ups! Error inesperado. Por favor, contacte al administrador del sistema.
