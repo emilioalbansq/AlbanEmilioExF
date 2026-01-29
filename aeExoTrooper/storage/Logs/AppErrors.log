@@ -34,3 +34,5 @@
 ╰──── LOG  ❱❱ 2026-01-20 00:18:08 | undefined.undefined | Ups! Error inesperado. Por favor, contacte al administrador del sistema.
 ╭─💀─ SHOW ❱❱ Ups! Error inesperado. Por favor, contacte al administrador del sistema. 
 ╰──── LOG  ❱❱ 2026-01-27 19:10:45 | aeSexoDAO.getMinReg(...) | [SQLITE_ERROR] SQL error or missing database (no such column: idSexo)
+╭─💀─ SHOW ❱❱ Ups! Error inesperado. Por favor, contacte al administrador del sistema. 
+╰──── LOG  ❱❱ 2026-01-28 10:16:45 | aeSexoDAO.getMinReg(...) | [SQLITE_ERROR] SQL error or missing database (no such column: idSexo)
