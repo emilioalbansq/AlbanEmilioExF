@@ -13,7 +13,7 @@ public abstract class AppConfig {
     private static final Properties props = new Properties();
    
     // Ruta principal (cuando se ejecuta dentro de aeExoTrooper/)
-    private static final String APP_PROPERTIES      = "src/app.properties";
+    private static final String APP_PROPERTIES      = "aeExoTrooper/src/app.properties";
     // Rutas alternativas (cuando se ejecuta desde el directorio padre)
     private static final String[] APP_PROPERTIES_PATHS = new String[] {
         "src/app.properties",
